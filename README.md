@@ -4,6 +4,43 @@
 
 Skill que convierte la descripción cruda de un defecto (texto informal, pasos sueltos, logs) en un **bug report profesional en Markdown**, validado contra un schema y con **severidad y prioridad sugeridas** automáticamente cuando el usuario no las indica.
 
+## Inicio rápido (5 minutos)
+
+Necesitas **Python 3.8+**, **Node.js 20.19+** y **Claude Code**. Todos los comandos se ejecutan en la carpeta raíz del repositorio.
+
+**1. Descargar el proyecto**
+```bash
+git clone https://github.com/freddymaydana131-cpu/Tarea1_Dewuard_Maydana.git
+cd Tarea1_Dewuard_Maydana
+```
+
+**2. Probar la skill sin Claude** (genera un reporte a partir del ejemplo)
+```bash
+python .claude/skills/bug-report-generator/scripts/generate_report.py examples/bug_input.json
+```
+Verás `[OK] Reporte generado: reports/BUG-001-...md`. Abre ese archivo: es el bug report terminado.
+> En macOS/Linux, si `python` no existe, usa `python3`.
+
+**3. Abrir la página de prueba con bugs**
+```bash
+npm install
+npm run dev
+```
+Se abre http://localhost:5173 (Mini Tienda). Busca un bug, por ejemplo: agrega 3 veces el Mouse y mira el total.
+
+**4. Reportar el bug con Claude** (en otra terminal, también en la raíz del repo)
+```bash
+claude
+```
+Escribe en el chat:
+```
+/bug-report-generator agregué 3 mouses de 85 bs y el total dice 85, total incorrecto, debería ser 255. windows 11 chrome localhost:5173
+```
+
+**5. Ver el resultado** en la carpeta `reports/`: Claude te dice la ruta del archivo, la severidad sugerida y qué datos faltan.
+
+El resto de este documento explica cada parte en detalle.
+
 ## ¿Cuándo usarla?
 
 Cuando necesites reportar un bug a desarrollo y tengas solo una descripción informal, por ejemplo:
@@ -66,14 +103,18 @@ capturas/                          # Evidencia de las pruebas (ver "Pruebas y ca
 
 1. Clonar el repositorio:
    ```bash
-   git clone <URL-de-este-repositorio>
+   git clone https://github.com/freddymaydana131-cpu/Tarea1_Dewuard_Maydana.git
    cd Tarea1_Dewuard_Maydana
    ```
-2. Verificar Python:
+2. Verificar Python (en macOS/Linux puede ser `python3`):
    ```bash
    python --version
    ```
-3. **Como skill del proyecto:** ya está en `.claude/skills/bug-report-generator/`; Claude Code la detecta al abrir el proyecto.
+3. Instalar Vite, solo necesario para la página de prueba:
+   ```bash
+   npm install
+   ```
+4. **Como skill del proyecto:** ya está en `.claude/skills/bug-report-generator/`; Claude Code la detecta al abrir el proyecto.
    **Para usarla en cualquier proyecto:** copiar la carpeta a `~/.claude/skills/`:
    ```bash
    # Linux / macOS / Git Bash
@@ -88,7 +129,9 @@ capturas/                          # Evidencia de las pruebas (ver "Pruebas y ca
 
 ### Opción A — Con Claude Code
 
+Abre Claude Code **en la carpeta raíz del repositorio** (ahí está `.claude/skills/`, que es donde Claude encuentra la skill):
 ```bash
+cd Tarea1_Dewuard_Maydana
 claude
 ```
 Y en el chat:
