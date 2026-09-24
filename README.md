@@ -4,43 +4,6 @@
 
 Skill que convierte la descripción cruda de un defecto (texto informal, pasos sueltos, logs) en un **bug report profesional en Markdown**, validado contra un schema y con **severidad y prioridad sugeridas** automáticamente cuando el usuario no las indica.
 
-## Inicio rápido (5 minutos)
-
-Necesitas **Python 3.8+**, **Node.js 20.19+** y **Claude Code**. Todos los comandos se ejecutan en la carpeta raíz del repositorio.
-
-**1. Descargar el proyecto**
-```bash
-git clone https://github.com/freddymaydana131-cpu/Tarea1_Dewuard_Maydana.git
-cd Tarea1_Dewuard_Maydana
-```
-
-**2. Probar la skill sin Claude** (genera un reporte a partir del ejemplo)
-```bash
-python .claude/skills/bug-report-generator/scripts/generate_report.py examples/bug_input.json
-```
-Verás `[OK] Reporte generado: reports/BUG-001-...md`. Abre ese archivo: es el bug report terminado.
-> En macOS/Linux, si `python` no existe, usa `python3`.
-
-**3. Abrir la página de prueba con bugs**
-```bash
-npm install
-npm run dev
-```
-Se abre http://localhost:5173 (Mini Tienda). Busca un bug, por ejemplo: agrega 3 veces el Mouse y mira el total.
-
-**4. Reportar el bug con Claude** (en otra terminal, también en la raíz del repo)
-```bash
-claude
-```
-Escribe en el chat:
-```
-/bug-report-generator agregué 3 mouses de 85 bs y el total dice 85, total incorrecto, debería ser 255. windows 11 chrome localhost:5173
-```
-
-**5. Ver el resultado** en la carpeta `reports/`: Claude te dice la ruta del archivo, la severidad sugerida y qué datos faltan.
-
-El resto de este documento explica cada parte en detalle.
-
 ## ¿Cuándo usarla?
 
 Cuando necesites reportar un bug a desarrollo y tengas solo una descripción informal, por ejemplo:
@@ -88,9 +51,7 @@ demo-app/                          # Página "Mini Tienda" con 5 bugs para proba
 examples/
 ├── raw_bug.txt                    # Entrada cruda de ejemplo
 ├── bug_input.json                 # JSON estructurado de ejemplo
-├── bug_input_invalid.json         # JSON con errores para probar la validación
 └── expected_output.md             # Resultado esperado
-capturas/                          # Evidencia de las pruebas (ver "Pruebas y capturas")
 ```
 
 ## Requisitos
@@ -103,18 +64,14 @@ capturas/                          # Evidencia de las pruebas (ver "Pruebas y ca
 
 1. Clonar el repositorio:
    ```bash
-   git clone https://github.com/freddymaydana131-cpu/Tarea1_Dewuard_Maydana.git
+   git clone <https://github.com/freddymaydana131-cpu/Tarea1_Dewuard_Maydana.git>
    cd Tarea1_Dewuard_Maydana
    ```
-2. Verificar Python (en macOS/Linux puede ser `python3`):
+2. Verificar Python:
    ```bash
    python --version
    ```
-3. Instalar Vite, solo necesario para la página de prueba:
-   ```bash
-   npm install
-   ```
-4. **Como skill del proyecto:** ya está en `.claude/skills/bug-report-generator/`; Claude Code la detecta al abrir el proyecto.
+3. **Como skill del proyecto:** ya está en `.claude/skills/bug-report-generator/`; Claude Code la detecta al abrir el proyecto.
    **Para usarla en cualquier proyecto:** copiar la carpeta a `~/.claude/skills/`:
    ```bash
    # Linux / macOS / Git Bash
@@ -129,9 +86,7 @@ capturas/                          # Evidencia de las pruebas (ver "Pruebas y ca
 
 ### Opción A — Con Claude Code
 
-Abre Claude Code **en la carpeta raíz del repositorio** (ahí está `.claude/skills/`, que es donde Claude encuentra la skill):
 ```bash
-cd Tarea1_Dewuard_Maydana
 claude
 ```
 Y en el chat:
@@ -234,48 +189,18 @@ Ver el código de salida: `echo $?` (Bash) o `echo $LASTEXITCODE` (PowerShell).
 
 ## Pruebas y capturas
 
-Comandos ejecutados desde la raíz del repo (Git Bash). Para ver el código de salida: `echo $?` en Git Bash o `echo $LASTEXITCODE` en PowerShell.
+### Caso exitoso
+![Ejecución exitosa](capturas/validacion_exito.png.png)
+![Reporte generado](capturas/bug%20creado.png.png)
 
-### 1. Caso exitoso: validar y generar (exit 0)
-```bash
-python .claude/skills/bug-report-generator/scripts/validate_input.py examples/bug_input.json
-python .claude/skills/bug-report-generator/scripts/generate_report.py examples/bug_input.json --out reports --id 001 --date 2026-09-24
-```
-Resultado: `[OK] bug_input.json es válido.` y `[OK] Reporte generado: reports\BUG-001-...md` con severidad **Alta (sugerida)**, prioridad **P2**.
+### Entrada inválida (exit 1)
+![Errores de validación](capturas/bug%20invalido.png)
 
-![Validación y generación exitosas](capturas/01-validacion-exito.png)
+### Archivo inexistente y reporte duplicado
+![Otros errores](capturas/archivo%20inexistente.png)
 
-### 2. Caso exitoso: ID automático (exit 0)
-Sin `--id`, el script toma el siguiente número libre en `reports/` (BUG-002).
-```bash
-python .claude/skills/bug-report-generator/scripts/generate_report.py examples/bug_input.json --out reports
-```
-![Reporte generado con ID automático](capturas/02-reporte-generado.png)
-
-### 3. Entrada inválida (exit 1)
-`examples/bug_input_invalid.json` tiene título y resumen muy cortos, falta `environment.os`, un solo paso, `actual` vacío y una severidad no permitida (`Urgente`). El script **no genera el reporte** y lista los 7 problemas.
-```bash
-python .claude/skills/bug-report-generator/scripts/generate_report.py examples/bug_input_invalid.json --out reports
-```
-![Errores de validación](capturas/03-entrada-invalida.png)
-
-### 4. Problemas habituales: archivo inexistente (exit 2) y reporte duplicado (exit 3)
-```bash
-python .claude/skills/bug-report-generator/scripts/validate_input.py no_existe.json
-python .claude/skills/bug-report-generator/scripts/generate_report.py examples/bug_input.json --out reports --id 001 --date 2026-09-24
-```
-Resultado: `[ERROR] No se encontró el archivo: no_existe.json` y `[ERROR] Ya existe reports\BUG-001-...md. Usa --force para sobrescribirlo u otro --id.`
-
-![Archivo inexistente y reporte duplicado](capturas/04-archivo-inexistente-duplicado.png)
-
-### 5. Flujo completo con Claude Code
-Bug real encontrado en la Mini Tienda (`npm run dev`), descrito de forma informal:
-```
-/bug-report-generator agregué 3 mouses de 85 bs, la línea dice 255 pero el total dice 85, total incorrecto. debería ser 255. windows 11 chrome localhost:5173, siempre
-```
-Claude estructuró el JSON, lo validó sin errores y generó `reports/BUG-003-carrito-el-total-no-coincide-con-el.md` con severidad **Alta (sugerida)** por la palabra clave "total incorrecto".
-
-![Claude Code usando la skill](capturas/05-claude-code.png)
+### Uso con Claude Code
+![Claude Code](capturas/claude_exito.png.png)
 
 ## Decisiones de diseño
 
