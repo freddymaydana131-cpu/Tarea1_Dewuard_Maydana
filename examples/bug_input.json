@@ -1,0 +1,23 @@
+{
+  "title": "[Carrito] Eliminar un producto borra también los de la misma categoría",
+  "summary": "Al quitar un producto del carrito se eliminan todos los productos que comparten su categoría, por lo que el usuario pierde artículos que sí quería comprar.",
+  "component": "Carrito",
+  "environment": {
+    "os": "Windows 11",
+    "browser": "Chrome 128",
+    "url": "http://localhost:5173/"
+  },
+  "steps": [
+    "Abrir la tienda en http://localhost:5173/",
+    "Agregar al carrito el producto \"iPhone 9\" (categoría smartphones)",
+    "Agregar al carrito el producto \"Samsung Universe 9\" (categoría smartphones)",
+    "En el panel del carrito, hacer clic en \"Quitar\" del producto \"iPhone 9\""
+  ],
+  "expected": "Solo se elimina \"iPhone 9\"; \"Samsung Universe 9\" permanece en el carrito.",
+  "actual": "Se eliminan los dos productos y el carrito queda vacío.",
+  "frequency": "Siempre",
+  "evidence": [
+    "capturas/carrito_vacio.png"
+  ],
+  "reporter": "Dewuard Maydana"
+}

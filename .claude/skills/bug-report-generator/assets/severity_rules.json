@@ -1,0 +1,63 @@
+{
+  "description": "Reglas para sugerir severidad cuando el JSON no la trae. Se evaluan en orden y gana la primera que coincida. La busqueda se hace sin tildes ni mayusculas sobre title + summary + actual. Criterios explicados en references/severity_guide.md.",
+  "default": "Media",
+  "priority_by_severity": {
+    "Crítica": "P1",
+    "Alta": "P2",
+    "Media": "P3",
+    "Baja": "P4"
+  },
+  "rules": [
+    {
+      "severity": "Crítica",
+      "keywords": [
+        "crash",
+        "se cierra",
+        "se cuelga",
+        "se congela",
+        "deja de responder",
+        "sin responder",
+        "inutilizable",
+        "perdida de datos",
+        "se borran los datos",
+        "pantalla en blanco",
+        "error 500",
+        "no carga la aplicacion",
+        "no se puede iniciar sesion",
+        "cobro duplicado",
+        "vulnerabilidad",
+        "expone datos"
+      ]
+    },
+    {
+      "severity": "Alta",
+      "keywords": [
+        "no funciona",
+        "no se guarda",
+        "no responde",
+        "calculo incorrecto",
+        "total incorrecto",
+        "se eliminan",
+        "elimina otros",
+        "no se puede",
+        "bloquea",
+        "datos incorrectos",
+        "no carga"
+      ]
+    },
+    {
+      "severity": "Baja",
+      "keywords": [
+        "typo",
+        "ortografia",
+        "alineacion",
+        "desalineado",
+        "color",
+        "texto cortado",
+        "tooltip",
+        "cosmetico",
+        "espaciado"
+      ]
+    }
+  ]
+}

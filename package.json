@@ -1,0 +1,15 @@
+{
+  "name": "tarea1-bug-report-generator",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Skill bug-report-generator para Claude Code + página Mini Tienda con bugs para probarla",
+  "type": "module",
+  "scripts": {
+    "dev": "vite demo-app --port 5173 --open",
+    "build": "vite build demo-app --outDir ../dist --emptyOutDir",
+    "preview": "vite preview demo-app --outDir ../dist --port 4173"
+  },
+  "devDependencies": {
+    "vite": "^8.3.1"
+  }
+}

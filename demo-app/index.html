@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mini Tienda</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="header">
+    <h1>Mini Tienda</h1>
+    <p>Página de prueba con errores intencionales para la skill <code>bug-report-generator</code>.</p>
+  </header>
+
+  <main class="layout">
+    <section class="catalog">
+      <input id="search" class="search" type="text" placeholder="Buscar artículo por nombre...">
+      <div id="products" class="grid"></div>
+      <p id="no-results" class="empty" hidden>No se encontraron artículos.</p>
+    </section>
+
+    <aside class="cart">
+      <h2>Carrito</h2>
+      <ul id="cart-items" class="cart-items"></ul>
+      <p id="cart-empty" class="empty">El carrito está vacío.</p>
+
+      <div class="coupon">
+        <input id="coupon" type="text" placeholder="Cupón (ej. DESC10)">
+        <button id="apply-coupon" class="btn btn-secondary">Aplicar</button>
+      </div>
+      <p id="coupon-msg" class="coupon-msg"></p>
+
+      <dl class="totals">
+        <dt>Subtotal</dt><dd id="subtotal">Bs 0.00</dd>
+        <dt>Descuento</dt><dd id="discount">Bs 0.00</dd>
+        <dt class="total">Total</dt><dd id="total" class="total">Bs 0.00</dd>
+      </dl>
+
+      <button id="clear-cart" class="btn btn-danger">Vaciar carrito</button>
+    </aside>
+  </main>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

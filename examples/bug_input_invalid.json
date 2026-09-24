@@ -1,0 +1,9 @@
+{
+  "title": "corto",
+  "summary": "muy corto",
+  "environment": { "browser": "Chrome" },
+  "steps": ["solo uno"],
+  "expected": "ok",
+  "actual": "",
+  "severity": "Urgente"
+}

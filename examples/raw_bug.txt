@@ -1,0 +1,1 @@
+oye en la tienda tech cuando borro un producto del carrito se me borran otros tambien, puse un iphone y un samsung (los dos son smartphones) y le di quitar al iphone y desaparecieron los dos. deberia quitar solo el que elegi. estoy en windows 11 con chrome 128, local en http://localhost:5173/ . pasa siempre. adjunto captura capturas/carrito_vacio.png
